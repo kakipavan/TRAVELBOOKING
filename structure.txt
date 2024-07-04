@@ -1,0 +1,11 @@
+flask_travel_booking/
+│
+├── app.py
+├── static/
+│   └── style.css
+└── templates/
+    ├── index.html
+    ├── login.html
+    ├── signup.html
+    ├── dashboard.html
+    └── base.html
