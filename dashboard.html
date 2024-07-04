@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TravelBooking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome, {{ session['username'] }}</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Your Bookings</h2>
+            <ul>
+                {% for booking in bookings %}
+                    <li>
+                        <strong>{{ booking.hotel_name }}</strong> - 
+                        {% if booking.airline %}
+                            Airline: {{ booking.airline.airline_name }} | 
+                            Flights:
+                            <ul>
+                                {% for flight in booking.airline.flights %}
+                                    <li>{{ flight.source }} to {{ flight.destination }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        Check-in: {{ booking.check_in_date }} | 
+                        Check-out: {{ booking.check_out_date }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h3>Add a Booking</h3>
+            <form method="POST" action="/add_booking">
+                <input type="text" name="airline_name" placeholder="Airline Name" required>
+                <input type="text" name="flight_source" placeholder="Flight Source" required>
+                <input type="text" name="flight_destination" placeholder="Flight Destination" required>
+                <input type="text" name="hotel_name" placeholder="Hotel Name" required>
+                <input type="date" name="check_in_date" placeholder="Check-in Date" required>
+                <input type="date" name="check_out_date" placeholder="Check-out Date" required>
+                <button type="submit">Add Booking</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 TravelBooking. All rights reserved.</p>
+    </footer>
+</body>
+</html>
